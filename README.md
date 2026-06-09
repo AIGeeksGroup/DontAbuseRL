@@ -58,7 +58,7 @@ This is not an impossibility claim. RL-first or self-supervised RL regimes may b
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/chart?repos=AIGeeksGroup/DontAbuseRL&type=date&legend=top-left)](https://www.star-history.com/?repos=AIGeeksGroup%2FDontAbuseRL&type=date&legend=top-left)
+[![Star History Chart](https://api.star-history.com/svg?repos=AIGeeksGroup/DontAbuseRL&type=date&legend=top-left)](https://www.star-history.com/?repos=AIGeeksGroup%2FDontAbuseRL&type=date&legend=top-left)
 
 
 ## Acknowledgement
