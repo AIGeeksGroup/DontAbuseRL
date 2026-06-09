@@ -8,7 +8,7 @@ This is the official project page repository for the paper:
 >
 > \*Equal contribution. †Project lead. ‡Corresponding author.
 >
-> *ICML 2026 Position*
+> ***ICML 2026 Position***
 >
 > ### [Paper](https://openreview.net/pdf?id=Q83EEeC6ce) | [Website](https://aigeeksgroup.github.io/DontAbuseRL/)
 
