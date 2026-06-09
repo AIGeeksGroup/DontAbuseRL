@@ -28,10 +28,10 @@
   <link rel="icon" type="image/x-icon" href="https://assets.squarespace.com/universal/default-favicon.ico">
   <meta property="og:type" content="article">
   <meta itemprop="datePublished" content="2025-07-15T18:29:13-0700">
-  <meta itemprop="dateModified" content="2025-07-15T18:29:13-0700">
+  <meta itemprop="dateModified" content="2026-06-09T00:00:00+0800">
   <meta itemprop="headline" content="Position: RL Should Be Used to Adjust Foundation Models, NOT Abused">
   <meta name="twitter:card" content="summary">
-  <meta name="description" content="">
+  <meta name="description" content="A blog summary of our ICML 2026 position paper arguing that reinforcement learning should usually adjust foundation models after pretraining and cold-start supervision, not replace them as the default path to capability creation.">
 
   <link rel="preconnect" href="https://images.squarespace-cdn.com/">
   <link rel="preconnect" href="https://use.typekit.net/" crossorigin="">
@@ -120,8 +120,8 @@
                           <div class="blog-meta-item blog-meta-item--author p-author author" data-content-field="author">
                             <span class="paper-authors">Ting Huang<sup>*</sup>, <a href="https://steve-zeyu-zhang.github.io/">Zeyu Zhang</a><sup>*&dagger;</sup>, Hao Tang<sup>&Dagger;</sup></span>
                             <span class="paper-affiliation">School of Computer Science, Peking University</span>
-                            <span class="paper-notes"><sup>*</sup>Equal contribution. <sup>&dagger;</sup>Project lead. <sup>&Dagger;</sup>Corresponding authors: bjdxtanghao@gmail.com.</span>
-                            <a class="paper-link-button" href="https://arxiv.org/">Paper</a>
+                            <span class="paper-notes"><sup>*</sup>Equal contribution. <sup>&dagger;</sup>Project lead. <sup>&Dagger;</sup>Corresponding author: bjdxtanghao@gmail.com.</span>
+                            <a class="paper-link-button" href="https://openreview.net/pdf?id=Q83EEeC6ce">Paper</a>
                           </div>
                         </div>
                       </div>
@@ -143,60 +143,60 @@
                                         <figcaption>Yann LeCun's cake analogy: self-supervised learning is the cake, supervised learning is the icing, and reinforcement learning is the cherry on top.</figcaption>
                                       </figure>
 
-                                      <p>RL is powerful because it can push a model toward behaviors we can reward: correctness, constraint satisfaction, instruction following, tool-use discipline, and long-horizon consistency. But RL is also expensive and brittle. It depends on sampling, reward design, stabilization tricks, and careful evaluation. When used too early, it often spends compute searching through a behavior space that has not yet been shaped into something reliable.</p>
+                                      <p>RL is powerful because it can push a model toward behaviors we can reward: correctness, constraint satisfaction, instruction following, tool-use discipline, and long-horizon consistency. But RL is also expensive and brittle. It depends on sampling, reward design, stabilization tricks, and careful evaluation. When meaningful supervision or scaffolding is available, using it first usually provides a cheaper and more stable behavior manifold for RL to refine.</p>
 
-                                      <p class="blog-callout">The key distinction is <strong>capability creation vs. capability adjustment</strong>. Pretraining and cold-start supervision establish usable structure; RL mostly reallocates probability mass toward better trajectories the model can already express.</p>
+                                      <p class="blog-callout">The key distinction is <strong>capability creation vs. capability adjustment</strong>. Pretraining and cold-start supervision establish usable structure; RL most reliably reallocates probability mass toward better trajectories the model can already express. This is a default-practice claim, not an impossibility claim about RL-first discovery.</p>
 
                                       <h2>Five Pillars</h2>
 
                                       <section class="pillar-block">
                                         <h3>Pillar 1</h3>
                                         <p class="pillar-statement">RL should be used to adjust foundation models after pretraining, particularly when a model remains unsatisfactory in certain aspects.</p>
-                                        <p>Across recent R1-style pipelines, RL is most useful after the model can already produce the desired behavior sometimes. It then shifts probability mass toward more reliable, correct, and constraint-compliant trajectories.</p>
+                                        <p>Across recent R1-style pipelines, RL is most useful after the model can already produce the desired behavior sometimes. It then acts as a selector and stabilizer, shifting probability mass toward more reliable, correct, and constraint-compliant trajectories.</p>
                                       </section>
 
                                       <section class="pillar-block">
                                         <h3>Pillar 2</h3>
-                                        <p class="pillar-statement">RL is extremely expensive and inefficient, and therefore should not be used excessively during the pretraining stage or the cold-start stage.</p>
-                                        <p>The cost of RL is structural: repeated sampling, reward design, and stabilization all matter. If the behavior manifold has not been shaped yet, much of the RL budget is spent exploring unstable space rather than refining useful behavior.</p>
+                                        <p class="pillar-statement">When meaningful supervised or scaffolded signals are available, they should usually precede RL.</p>
+                                        <p>The first-order question is not simply whether RL is expensive, but whether a meaningful scaffold exists. If it does, use it to establish a stable behavior manifold and reserve RL for residual failures; RL-first should carry a higher burden of proof.</p>
                                       </section>
 
                                       <section class="pillar-block">
                                         <h3>Pillar 3</h3>
-                                        <p class="pillar-statement">RL does not enable or activate a model’s reasoning capability; that capability is already established during the SFT stage. Instead, RL serves to further enhance the model’s existing reasoning ability.</p>
-                                        <p>This is the core causal claim. SFT and cold-start traces provide reasoning structure; RL improves selection, consistency, and constraint satisfaction. “RL improves reasoning” is plausible, but “RL creates reasoning from scratch” needs much stronger evidence.</p>
+                                        <p class="pillar-statement">RL should not be assumed to create reasoning capability; in current foundation-model practice, it more often refines reasoning behaviors made elicitable by pretraining, SFT, or other scaffolds.</p>
+                                        <p>This is the core causal claim. SFT and cold-start traces can provide reasoning structure; RL improves selection, consistency, and constraint satisfaction. “RL improves reasoning” is plausible, but “RL creates reasoning from scratch” requires stronger evidence that controls for hidden scaffolds, verifier artifacts, and sampling budgets.</p>
                                       </section>
 
                                       <section class="pillar-block">
                                         <h3>Pillar 4</h3>
-                                        <p class="pillar-statement">The reward functions used in RLVR should be typically simple rather than over-engineered, yet they remain highly effective.</p>
-                                        <p>Verifiable rewards are powerful because they are auditable. Simple checks, tests, format constraints, and deterministic validators are easier to debug than opaque reward models, and they make failure modes clearer when optimization starts gaming the proxy.</p>
+                                        <p class="pillar-statement">Reward design should prioritize auditability, verifiability, and minimal composition over opaque reward complexity.</p>
+                                        <p>Verifiable rewards are powerful because they are externally checkable. Simple checks, tests, format constraints, and deterministic validators are easier to debug than opaque reward stacks, but even simple verifiers should be stress-tested for noise, brittleness, and proxy gaming.</p>
                                       </section>
 
                                       <section class="pillar-block">
                                         <h3>Pillar 5</h3>
-                                        <p class="pillar-statement">Self-Supervised Reinforcement Learning (SSRL) should be an effective way for world models to develop self-evolving capabilities.</p>
-                                        <p>Self-evolution is promising when the loop is grounded in structured interaction, memory, and verifiable progress signals. Without those anchors, self-generated optimization can drift into self-confirming errors or reward hacking.</p>
+                                        <p class="pillar-statement">Self-Supervised Reinforcement Learning (SSRL) is a boundary case for structured interaction settings, not a generic replacement for pretraining or supervised scaffolding.</p>
+                                        <p>Self-evolution is promising when the loop is grounded in interaction, memory, and verifiable progress signals. Without those anchors, self-generated optimization can drift into self-confirming errors, unstable objectives, or reward hacking.</p>
                                       </section>
 
                                       <h2>Why “More RL” Is Not a Strategy</h2>
-                                      <p>The popular “RL creates reasoning” story is too coarse. RL can amplify reasoning-like behavior, and sometimes dramatically. But a stronger causal claim requires stronger evidence: compute-matched comparisons, cold-start ablations, verifier stress tests, and clear reporting of sampling budgets. Without that discipline, we risk crediting RL for structure that was actually supplied by pretraining, data curation, prompt formats, or supervised traces.</p>
+                                      <p>The popular “RL creates reasoning” story is too coarse. RL can amplify reasoning-like behavior, and sometimes dramatically. But a stronger causal claim requires stronger evidence: compute-matched comparisons, cold-start ablations, verifier stress tests, and clear reporting of sampling budgets. Without that discipline, we risk crediting RL for structure that was actually supplied by pretraining, data curation, prompt formats, expert trajectories, or supervised traces.</p>
 
                                       <p>Reward design is another reason to be cautious. More sophisticated rewards are not automatically safer. If the proxy is wrong, a stronger optimizer can simply exploit it more effectively. This is why we argue for reward minimalism: use checkable signals where possible, report verifier failures, and make the optimization target easy to audit.</p>
 
                                       <h2>Practical Guidelines</h2>
-                                      <p>Before applying RL, ask three questions: <strong>Can the model already do the behavior sometimes?</strong> <strong>Can we diagnose the failures?</strong> <strong>Can success be audited with a simple signal?</strong> If the answer is yes, RL is a strong adjustment tool. If not, the cheaper and clearer path is often better supervision, better data, better prompting, or a better verifier.</p>
+                                      <p>Before applying RL, ask four questions: <strong>Is meaningful supervision or scaffolding available?</strong> <strong>Can the model already do the behavior sometimes?</strong> <strong>Can we diagnose the failures?</strong> <strong>Can success be audited with a verifiable signal?</strong> If the answer is yes, RL is a strong adjustment tool. If not, the clearer path is often better supervision, better data, better prompting, better model specification, or a better verifier.</p>
 
                                       <ul class="blog-points">
-                                        <li><mark class="blog-highlight">Use stage discipline by default:</mark> pretraining, cold-start supervision, then RL adjustment.</li>
+                                        <li><mark class="blog-highlight">Use stage discipline by default:</mark> pretraining, cold-start supervision or scaffolding, then RL adjustment.</li>
                                         <li><mark class="blog-highlight">State falsifiable RL claims:</mark> separate the effect of RL from scaffolds, data curation, prompt formats, and verifiers.</li>
-                                        <li><mark class="blog-highlight">Make cost visible:</mark> report sampled trajectories, reward definitions, stabilizers, verifier pass rates, and regressions.</li>
+                                        <li><mark class="blog-highlight">Make cost visible:</mark> report sampled trajectories, reward definitions, stabilizers, verifier pass rates, verifier failures, and regressions.</li>
                                       </ul>
 
                                       <h2>Call to Action</h2>
-                                      <p>Researchers should stop treating RL as a magic capability dial. Companies and institutions should require transparency around sampling cost, reward definitions, and stabilizers when RL is claimed to replace supervision. The ML community should build standards that distinguish capability creation from refinement.</p>
+                                      <p>Researchers should stop treating RL as a magic capability dial. Companies and institutions should require transparency around sampling cost, reward definitions, verifier behavior, and stabilizers when RL is claimed to replace supervision. The ML community should build standards that distinguish capability creation, capability elicitation, and behavioral refinement.</p>
 
-                                      <p class="blog-ending">The field does not need less RL. It needs more disciplined RL: staged after cold-start alignment, grounded in auditable rewards, and reported with compute transparency. RL should be the cherry, not the whole cake.</p>
+                                      <p class="blog-ending">The field does not need less RL. It needs more disciplined RL: staged after cold-start alignment or scaffolding when available, grounded in auditable rewards, and reported with compute transparency. RL should be the cherry, not the whole cake.</p>
                                     </div>
                                   </div>
                                 </div>
