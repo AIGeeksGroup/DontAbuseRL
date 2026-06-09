@@ -7,6 +7,7 @@ This is the official project page repository for the paper:
 > Ting Huang\*, [Zeyu Zhang](https://steve-zeyu-zhang.github.io/)\*†, and Hao Tang‡
 >
 > \*Equal contribution. †Project lead. ‡Corresponding author.
+>
 > *ICML 2026 Position*
 >
 > ### [Paper](https://openreview.net/pdf?id=Q83EEeC6ce) | [Website](https://aigeeksgroup.github.io/DontAbuseRL/)
